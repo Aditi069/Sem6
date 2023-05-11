@@ -1,0 +1,99 @@
+Crossword Puzzle
+
+function solve(board, across_words, down_words) {
+    for each row in board {
+        len = length of longest whitespace in that row
+
+        for word in across_words {
+            if len(word) == len{
+                board.replace(longest whitespace, word)
+            }
+        }
+    }
+
+    for each column in board {
+        len = length of longest whitespace in that column
+
+        for word in down_words {
+            if len(word) == len{
+                board.replace(longest whitespace, word)
+            }
+        }
+    }
+}
+
+
+///
+
+// Function to solve the crossword puzzle
+void solve(char board[][MAX_SIZE], char across_words[][MAX_WORD_LENGTH], char down_words[][MAX_WORD_LENGTH]) {
+    // Iterate through each row in the board
+    for (int i = 0; i < MAX_SIZE; i++) {
+        int len = 0;
+        
+        // Find the length of the longest whitespace in the current row
+        for (int j = 0; j < MAX_SIZE; j++) {
+            int current_len = 0;
+            
+            // Calculate the length of the current whitespace
+            while (j < MAX_SIZE && board[i][j] == ' ') {
+                current_len++;
+                j++;
+            }
+            
+            // Update the length if the current whitespace is longer
+            if (current_len > len) {
+                len = current_len;
+            }
+        }
+        
+        // Iterate through the across words
+        for (int k = 0; k < MAX_WORDS; k++) {
+            // Check if the length of the current word matches the length of the whitespace
+            if (strlen(across_words[k]) == len) {
+                // Replace the longest whitespace with the current word
+                for (int j = 0; j < MAX_SIZE; j++) {
+                    if (board[i][j] == ' ') {
+                        strncpy(&board[i][j], across_words[k], len);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Iterate through each column in the board
+    for (int j = 0; j < MAX_SIZE; j++) {
+        int len = 0;
+        
+        // Find the length of the longest whitespace in the current column
+        for (int i = 0; i < MAX_SIZE; i++) {
+            int current_len = 0;
+            
+            // Calculate the length of the current whitespace
+            while (i < MAX_SIZE && board[i][j] == ' ') {
+                current_len++;
+                i++;
+            }
+            
+            // Update the length if the current whitespace is longer
+            if (current_len > len) {
+                len = current_len;
+            }
+        }
+        
+        // Iterate through the down words
+        for (int k = 0; k < MAX_WORDS; k++) {
+            // Check if the length of the current word matches the length of the whitespace
+            if (strlen(down_words[k]) == len) {
+                // Replace the longest whitespace with the current word
+                for (int i = 0; i < MAX_SIZE; i++) {
+                    if (board[i][j] == ' ') {
+                        strncpy(&board[i][j], down_words[k], len);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+MAP COLORING PROBLEM:
+
+Consider the following presets:
+
+col[]:array containing all colors to be used
+open[]:list of all nodes that are not yet colored
+closed[]:list of all nodes that are colored
+
+step 1:
+create a graph with each map element as a vertex and connect neighbouring elements using edges
+
+step 2:
+repeat while(open[]!=empty)
+		for(i=0;i<open;i++)
+			find all nodes connected to open[i]
+			eliminate all used colors
+			choose color for 'i' from remaining colors available
+	end of loop
+
+step 3:
+if(open==empty)
+	goto step 4
+else
+	print(could not color entire map)
+	goto step 5
+
+step 4:
+print colors, sequence of all map elements
+
+step 5:
+end	

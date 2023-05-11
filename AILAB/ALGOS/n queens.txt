@@ -1,0 +1,34 @@
+N-QUEENS PROBLEM:
+
+Consider the following presets:
+
+arr[][]:board
+q=queen number
+n=number of queens to be placed
+
+step 1:
+accept value of n from user
+create a 2d matrix with n rows and columns
+set entire matrix to '0'
+
+step 2:
+i=0,j=q-1
+if(arr[i][j]==0)
+	arr[i][j]=q
+	set all board tiles in the row,column and diagonal of the queen (q) to -q
+	q++
+else
+	i++
+if(i==n && j==q-1)
+	set all board tiles in the row,column and diagonal of the queen (q-1) to 0
+	remove queen (q-1) and set tile to -1
+	q--
+
+step 3:
+repeat step 2 while(q!=n+1)
+
+step 4:
+display board
+
+step 5:
+end

@@ -1,9 +1,12 @@
+# Import the necessary module
 from colorama import init
 
+# Initialize the colorama module
 init(autoreset=True)
 
-
+# Define a class for city distance calculation
 class cityDistance:
+    # Define the city map with distances between cities
     cityMap = {
         "Delhi": [(800, "Indore"), (1300, "Kolkata")],
         "Indore": [(600, "Mumbai"), (500, "Nagpur"), (800, "Delhi")],
@@ -18,6 +21,7 @@ class cityDistance:
         ],
         "Bangalore": [(1000, "Mumbai"), (500, "Hyderabad")],
     }
+    # Define the heuristic function using straight line distance
     hSLD = {
         "Delhi": 0,
         "Indore": 800,
@@ -27,6 +31,7 @@ class cityDistance:
         "Nagpur": 1000,
         "Kolkata": 1300,
     }
+    # Define the queue, open and closed lists, start and end cities, and total distance
     queue = []
     open = []
     closed = []
@@ -34,13 +39,30 @@ class cityDistance:
     end = "Delhi"
     totalDistance = 0
 
+    # Function to expand the near cities from the current city
     def expand(self, s: str):
+        """
+        This function expands the near cities from the current city.
+
+        Args:
+        s (str): The current city.
+
+        Returns:
+        near_cities (list): A list of tuples containing the distance and name of the near cities.
+        """
         near_cities = self.cityMap.get(s)
         if near_cities is not None:
             near_cities.sort(reverse=True)
         return near_cities
 
+    # Function to check if the move is valid
     def validMove(self, near_cities: list):
+        """
+        This function checks if the move to the near cities is valid.
+
+        Args:
+        near_cities (list): A list of tuples containing the distance and name of the near cities.
+        """
         for city in near_cities:
             self.queue.append((self.hSLD.get(city[1]), city[1], city[0]))
             if city[1] not in self.closed:
@@ -49,7 +71,11 @@ class cityDistance:
                 self.open.remove(city[1])
         self.queue.sort(reverse=True)
 
+    # Function to perform best first search
     def bestFirstSearch(self):
+        """
+        This function performs the best first search algorithm to find the shortest path between two cities.
+        """
         self.queue.append((self.hSLD.get(self.start), self.start, 0))
         self.open.append(self.start)
         while 1:
@@ -68,6 +94,6 @@ class cityDistance:
                 )
                 exit(1)
 
-
+# Create an instance of the cityDistance class and perform the best first search
 s = cityDistance()
 s.bestFirstSearch()

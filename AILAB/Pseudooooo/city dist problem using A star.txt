@@ -1,0 +1,91 @@
+CITY DISTANCE PROBLEM USING A* ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal city are hard coded
+edge value indicates straight line distance
+evaluation function f(n)=g(n)+h(n)
+g(n):distance travelled from origin
+h(n):distance travelled from destination
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+created a weighted graph with each city as a vertex and distance between 2 cities as weight of that egde
+
+
+step 2:
+set origin_city as root node
+
+step 3:
+repeat while(node(h)!=0)
+		find all cities connected to current_node from the graph
+		calculate evaluation function value of each node
+		for(i=0;i<all_node;i++)
+			if(node(h)==0)
+				print(destination reached)
+				goto step 4
+			if(node(f)<current(f))
+				current=node
+			update open and close list
+end of loop
+
+step 4:
+print tree traversal route from origin to destination and total travelled
+end
+
+///
+
+
+#include <stdio.h>
+#include <stdbool.h>
+
+// Structure to represent a city
+typedef struct {
+    int city_id;
+    int distance_from_origin;
+    int distance_to_destination;
+} City;
+
+// Function to calculate the evaluation function value (f(n) = g(n) + h(n))
+int calculateEvaluation(City city) {
+    return city.distance_from_origin + city.distance_to_destination;
+}
+
+int main() {
+    City origin_city = {1, 0, 10}; // Set origin city as root node
+    City destination_city = {10, 20, 0}; // Set destination city
+    City graph[100]; // Weighted graph with each city as a vertex and distance as the weight
+    City current_node = origin_city; // Current node
+    City child_node; // Child node
+    int all_nodes; // Number of nodes in the graph
+    City open[100]; // List of nodes whose children are not found
+    City closed[100]; // List of nodes whose children are found
+
+    // Step 3: Repeat until the heuristic value of the current node is 0
+    while (current_node.distance_to_destination != 0) {
+        // Find all cities connected to the current_node from the graph
+        // Calculate the evaluation function value of each node
+
+        // Loop through all child nodes
+        for (int i = 0; i < all_nodes; i++) {
+            if (child_node.distance_to_destination == 0) {
+                // Destination reached
+                printf("Destination reached\n");
+                goto step4;
+            }
+            if (child_node.distance_from_origin < current_node.distance_from_origin) {
+                // Update the current_node
+                current_node = child_node;
+            }
+            // Update open and closed lists
+        }
+    }
+
+    // Step 4: Print the tree traversal route from origin to destination and total distance traveled
+    step4:
+    printf("Tree traversal route from origin to destination\n");
+    printf("Total distance traveled: %d\n", current_node.distance_from_origin);
+
+    return 0;
+}

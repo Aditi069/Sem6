@@ -1,0 +1,203 @@
+TIC TAC TOE USING MAGIC SQUARE
+
+Consider the given presets:
+
+magic square : 
+
+_8_|_3_|_4_
+_1_|_5_|_9_
+ 6 | 7 | 2
+
+move: move to be played
+mc1: move count for computer
+mc2: move count for player
+C: check for win
+comp[]: array for computer moves
+play[]: array for player moves
+arr[9]: board
+
+step 1: choose whether the player starts or computer starts
+
+step 2: 
+if player_move:
+	player may choose any one of the available move
+	  
+if comp_move:
+	if(mc1==1):
+		if(centre is available):
+			comp plays centre
+		else
+			comp plays any of the corner moves
+	else if(mc1==2):
+		comp plays any one of the corner moves
+	else
+		if(win_move==1)
+			comp plays win move
+		else if(block_move==1)
+			comp plays block move
+		else
+			comp plays random move
+
+step 3:
+for(player):
+	if(win_cond==1)
+		print(player wins)
+		goto step 6
+
+for(comp):
+	if(win_cond==1)
+		print(comp wins)
+		goto step 6
+
+step 4:
+repeat steps 2,3 while(board!=full)
+
+step 5:
+if(board==full)
+	print(game draw)
+
+step 6:
+end
+
+win_move:
+	a=15-comp[i-1]=com[[i-2]
+	if(a<9)
+		return a
+
+block_move:
+	a=15-player[i-1]=player[[i-2]
+	if(a<9)
+		return a
+
+win_cond:
+	i=0
+	while(i<9)
+		if(arr[i] == 1 && arr[i+1] == 1 && arr[i+2] == 1)
+			print(player wins)
+			return 1
+		if(arr[i] == 2 && arr[i+1] == 2 && arr[i+2] == 2)
+			print(comp wins)
+			return 1
+		i=i+3
+	i=0
+	while(i<3)
+		if(arr[i]== 1 && arr[i+3] == 1 && arr[i+6] == 1)
+			print(player wins)
+			return 1
+		if(arr[i]== 2 && arr[i+3] == 2 && arr[i+6] == 2)
+			print(comp wins)
+			return 1
+		i=i++
+	i=0
+	if(arr[i] == 1 && arr[i+2] ==1 && arr[i+4] == 1)
+		print(player wins)
+		return 1
+
+	if(arr[i] == 2 && arr[i+4] == 2 && arr[i+8] == 2)
+		print(comp wins)
+		return 1
+      i=2;
+      if(arr[i] == 1 && arr[i+2] == 1 && arr[i+4] == 1)
+		print(player wins)
+        	return 1
+    	if(arr[i] == 2 && arr[i+2] == 2 && arr[i+4] == 2)
+		print(comp wins)
+        return 1
+	return 0
+
+///
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+// Function to check for a win
+int checkWin(int arr[]) {
+    // Define the winning combinations
+    int winning_combinations[8][3] = {
+        {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // Rows
+        {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // Columns
+        {0, 4, 8}, {2, 4, 6} // Diagonals
+    };
+
+    // Check for a win using the winning combinations
+    for (int i = 0; i < 8; i++) {
+        int a = winning_combinations[i][0];
+        int b = winning_combinations[i][1];
+        int c = winning_combinations[i][2];
+
+        if (arr[a] == arr[b] && arr[b] == arr[c]) {
+            return arr[a]; // Return the player number who wins
+        }
+    }
+
+    return 0; // No win
+}
+
+int main() {
+    int magic_square[9] = {8, 3, 4, 1, 5, 9, 6, 7, 2}; // Magic square
+    int move_count = 0; // Move count for both players
+    int player = 0; // Player number (1 for player, 2 for computer)
+    int comp[5]; // Array for computer moves
+    int play[4]; // Array for player moves
+    int board[9] = {0}; // Board array to represent the positions
+
+    // Step 1: Choose whether the player starts or computer starts
+
+    // Step 2: Repeat until the board is full
+    while (move_count < 9) {
+        // Step 2a: Player's move
+        if (player == 1) {
+            // Player chooses any available move
+
+            // Update the board array with the player's move
+
+            // Check for a win
+            if (checkWin(board) == 1) {
+                printf("Player wins\n");
+                goto step6;
+            }
+        }
+        // Step 2b: Computer's move
+        else {
+            if (move_count == 0) {
+                if (board[4] == 0) {
+                    // Computer plays the center move
+                }
+                else {
+                    // Computer plays any of the corner moves
+                }
+            }
+            else if (move_count == 1) {
+                // Computer plays any one of the corner moves
+            }
+            else {
+                // Check for a winning move
+
+                // Check for a blocking move
+
+                // Computer plays a random move
+            }
+
+            // Update the board array with the computer's move
+
+            // Check for a win
+            if (checkWin(board) == 2) {
+                printf("Computer wins\n");
+                goto step6;
+            }
+        }
+
+        // Step 4: Repeat steps 2 and 3 while the board is not full
+
+        // Increment the move count
+    }
+
+    // Step 5: If the board is full, it's a draw
+    printf("Game draw\n");
+
+step6:
+    return 0;
+}
+
+			

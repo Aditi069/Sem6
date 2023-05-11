@@ -1,0 +1,73 @@
+TIC TAC TOE USING MIN MAX ALGORITHM
+
+Consider the given presets:
+
+move: move to be played
+b[3][3]: board, arr[9[]: board
+max: computer, min: player
+
+step 1:
+choose whether the player starts or computer starts
+
+step 2:
+if player_move:
+	player may choose any one of the valid moves
+
+if comp_move:
+	best_val=-1000
+	for(i=0);i<5;i++)
+		for(j=0;j<5;j++)
+			if(b[i][j]=='')
+				b[i][j]=move
+				mov_val=minmax(board,ismax)
+				if(move_val>best_val)
+					b[i][j]=''
+					comp plays mov_val
+					best_val=mov=val
+
+step 3:
+for(player)
+	if(win_con==1)
+		print(player wins)
+		goto step 6
+
+for(comp)
+	if(win_con==1)
+		print(computer wins)
+		goto step 6
+
+step 4:
+repeat steps 2,3 while(board!=full)
+
+step 5:
+if(board==full)
+	print(game draw)
+
+step 6:
+end
+
+minmax:
+	score=heuristic(board)
+	if(score==10)
+		return score
+	if(score==-10)
+		return score
+	if(ismax)
+		best=-1000
+		for(i=0;i<5;i++)
+			for(j=0;j<5;j++)
+				if(b[i][j]=='')
+					b[i][j]=move
+					best=max(best,minmax(board,!ismax))
+					b[i][j]=''
+		return best
+	else
+		best=1000
+		for(i=0;i<5;i++)
+			for(j=0;j<5;j++)
+				if(b[i][j]=='')
+					b[i][j]=move
+					best=min(best,minmax(board,!ismax))
+					b[i][j]=''
+		return best
+		

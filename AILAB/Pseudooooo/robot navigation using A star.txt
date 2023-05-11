@@ -1,0 +1,158 @@
+ROBOT NAVIGATION PROBLEM USING A* ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal position are hard coded
+evaluation function f(n)=g(n)+h(n)
+g(n):distance travelled from initial tile
+h(n):manhattan distance to goal tile
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+set initial position to root node
+
+step 2:
+repeat while(node(h)!=0)
+		update open and close list
+		find all tiles that can be reached from current_node
+		calculate evaluation value of all child nodes
+		for(i=0;i<all_nodes;i++)
+			if(node(h)==0)
+				print(goal position achieved)
+				goto step 3
+			if(node(h)<current(h))
+				current=node
+end of loop
+
+step 3:
+print robot navigation path
+end
+
+
+///
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+// Structure to represent a tile
+typedef struct {
+    int row;
+    int col;
+    int g_value; // Distance travelled from the initial tile
+    int h_value; // Manhattan distance to the goal tile
+    int f_value; // Evaluation function value
+} Tile;
+
+// Function to calculate the Manhattan distance between two tiles
+int calculateManhattanDistance(Tile current_tile, Tile goal_tile) {
+    return abs(current_tile.row - goal_tile.row) + abs(current_tile.col - goal_tile.col);
+}
+
+// Function to update the open and closed lists
+void updateLists(Tile current_tile, Tile* open_list, Tile* closed_list, int* open_size, int* closed_size) {
+    closed_list[(*closed_size)] = current_tile;
+    (*closed_size)++;
+
+    for (int i = 0; i < (*open_size); i++) {
+        if (open_list[i].row == current_tile.row && open_list[i].col == current_tile.col) {
+            // Remove current_tile from open_list by shifting the remaining elements
+            for (int j = i; j < (*open_size) - 1; j++) {
+                open_list[j] = open_list[j + 1];
+            }
+            (*open_size)--;
+            break;
+        }
+    }
+}
+
+int main() {
+    Tile initial_tile = {0, 0, 0, 0, 0}; // Set initial tile as root node
+    Tile goal_tile = {3, 3, 0, 0, 0}; // Set goal tile
+
+    // Create the grid map
+    int grid_size = 4; // Assuming a 4x4 grid
+    Tile grid[grid_size * grid_size];
+
+    // Assign the row and column values for each tile in the grid
+    int tile_index = 0;
+    for (int i = 0; i < grid_size; i++) {
+        for (int j = 0; j < grid_size; j++) {
+            grid[tile_index].row = i;
+            grid[tile_index].col = j;
+            tile_index++;
+        }
+    }
+
+    Tile current_tile = initial_tile; // Current tile
+    int open_size = 0; // Number of tiles in the open list
+    int closed_size = 0; // Number of tiles in the closed list
+    Tile open_list[grid_size * grid_size]; // List of tiles whose children are not found
+    Tile closed_list[grid_size * grid_size]; // List of tiles whose children are found
+
+    // Step 2: Repeat until the heuristic value of the current tile is 0
+    while (current_tile.h_value != 0) {
+        // Find all tiles that can be reached from the current_tile
+        // Calculate the evaluation function value of each tile
+        int num_children = 0;
+
+        // Loop through all adjacent tiles
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) {
+                    continue; // Skip the current tile
+                }
+
+                int new_row = current_tile.row + i;
+                int new_col = current_tile.col + j;
+
+                // Check if the new tile is within the grid boundaries
+                if (new_row >= 0 && new_row < grid_size && new_col >= 0 && new_col < grid_size
+                && (i == 0 || j == 0)) { // Only consider adjacent tiles (horizontal and vertical)
+                    Tile child_tile = grid[new_row * grid_size + new_col];
+
+                    // Calculate the g_value, h_value, and f_value of the child_tile
+                    child_tile.g_value = current_tile.g_value + 1;
+                    child_tile.h_value = calculateManhattanDistance(child_tile, goal_tile);
+                    child_tile.f_value = child_tile.g_value + child_tile.h_value;
+
+                    // Add the child_tile to the open_list
+                    open_list[num_children] = child_tile;
+                    num_children++;
+                }
+            }
+        }
+
+        // Find the tile with the lowest f_value in the open_list
+        int lowest_f_index = 0;
+        for (int i = 1; i < num_children; i++) {
+            if (open_list[i].f_value < open_list[lowest_f_index].f_value) {
+                lowest_f_index = i;
+            }
+        }
+
+        // Update the current_tile
+        current_tile = open_list[lowest_f_index];
+
+        // Update the open_list and closed_list
+        updateLists(current_tile, open_list, closed_list, &open_size, &closed_size);
+    }
+
+    // Step 3: Check if the goal position is achieved
+    if (current_tile.h_value == 0) {
+        // Goal position achieved
+        printf("Goal position achieved!\n");
+
+        // Step 4: Print the robot navigation path
+        printf("Robot Navigation Path:\n");
+        for (int i = 0; i < closed_size; i++) {
+            printf("Row: %d, Column: %d\n", closed_list[i].row, closed_list[i].col);
+        }
+    } else {
+        // Could not color the entire map
+        printf("Could not reach the goal position!\n");
+    }
+
+    return 0;
+}

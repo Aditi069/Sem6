@@ -1,0 +1,36 @@
+WATER JUG USING Depth First Search:
+
+Consider the following presets:
+
+j1:max capacity of jug 1
+j2:max capacity of jug 2
+s1:value of jug 1 in goal state
+s2:value of jug 2 in goal state
+open[]:nodes whose children are not calculated
+closed[]:whose children are calculated
+x:current value of jug 1
+y:current value of jug 2
+
+initially both jugs are empty and all possible rules have been declared
+
+step 1:
+accept value of j1,j2,s1,s2 from user
+set root node with x=0,y=0
+
+step 2:
+repeat while(child_node==UNIQUE)
+find child_node of parent_node
+if(child_node==goal)
+	goto step 4
+else
+	update open and close list
+end loop
+
+step 3:
+backtrack to parent_node of current leaf node
+find child_node of parent_node
+goto step 2
+
+step 4:
+print the traversed route from root node to goal node
+end

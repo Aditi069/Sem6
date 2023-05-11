@@ -1,9 +1,13 @@
+# Import necessary libraries
 from colorama import Fore, init
 from copy import deepcopy
+
+# Initialize colorama
 init(autoreset=True)
 
-
+# Define a Robot class
 class Robot():
+    # Define the table layout
     table = [
         ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
         ['-', Fore.YELLOW+'#', '-', '-', '-', Fore.YELLOW+'#', Fore.YELLOW +
@@ -14,20 +18,29 @@ class Robot():
             Fore.YELLOW+'#', Fore.YELLOW+'#', Fore.YELLOW+'#', Fore.YELLOW+'#', '-'],
         ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
     ]
+    # Define the goal and start positions
     goalX = 6
     goalY = 2
     startX = 0
     startY = 3
+    # Create copies of the table for use in calculations
     newTable = deepcopy(table)
     newTable_2 = deepcopy(table)
     newTable_3 = deepcopy(table)
+    # Initialize the queue and visited lists
     queue = []
     visited = []
 
+    # Calculate the Manhatten distance
     def calcManhatten(self):
+        """
+        This function calculates the Manhatten distance between the start and goal positions
+        and updates the table with the distance values.
+        """
+        # Update the table with the start and goal positions
         self.table[self.startY][self.startX] = Fore.BLUE+'S'
         self.table[self.goalY][self.goalX] = Fore.RED+'G'
-        print("\n Manhatten Distance: \n")
+        # Calculate the Manhatten distance for each cell in the table
         for i in range(5):
             for j in range(11):
                 if self.table[i][j] != Fore.YELLOW+'#':
@@ -40,10 +53,15 @@ class Robot():
                 print(
                     f'\t{self.newTable_2[i][j]}+{self.newTable_3[i][j]}', end='')
             print('\n')
+        # Add the start position to the queue
         position = [self.startX, self.startY]
         self.queue.append((self.newTable[self.startY][self.startX], position))
 
+    # Get the neighbors of the current position
     def getNeighbors(self):
+        """
+        This function gets the neighbors of the current position and adds them to the queue.
+        """
         position = [[0] * 2] * 4
         value = ["0"] * 4
         position[0] = [self.startX+1, self.startY]
@@ -57,10 +75,14 @@ class Robot():
                     self.queue.append((value[i], position[i]))
         self.queue.sort(reverse=True)
 
+    # Implement the A* algorithm
     def a_star(self):
+        """
+        This function implements the A* algorithm to find the shortest path from the start to the goal position.
+        """
         steps = 0
         while (self.queue):
-            input()
+            # input()
             print(f"Steps taken: {steps}")
             print(f"Queue: {self.queue}")
             next = self.queue.pop()
@@ -85,13 +107,18 @@ class Robot():
                 '\t---------------------------------------------------------------------------------')
             steps += 1
 
+    # Print the table
     def printTable(self, table):
+        """
+        This function prints the table.
+        """
         for i in range(5):
             for j in range(11):
                 print("\t"+Fore.WHITE+str(table[i][j]), end='')
             print('\n')
 
 
+# Create a Robot object and run the A* algorithm
 temp = Robot()
 temp.calcManhatten()
 print('\n Current State:')

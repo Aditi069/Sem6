@@ -1,0 +1,35 @@
+CITY DISTANCE PROBLEM USING A* ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal city are hard coded
+edge value indicates straight line distance
+evaluation function f(n)=g(n)+h(n)
+g(n):distance travelled from origin
+h(n):distance travelled from destination
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+created a weighted graph with each city as a vertex and distance between 2 cities as weight of that egde
+
+
+step 2:
+set origin_city as root node
+
+step 3:
+repeat while(node(h)!=0)
+		find all cities connected to current_node from the graph
+		calculate evaluation function value of each node
+		for(i=0;i<all_node;i++)
+			if(node(h)==0)
+				print(destination reached)
+				goto step 4
+			if(node(f)<current(f))
+				current=node
+			update open and close list
+end of loop
+
+step 4:
+print tree traversal route from origin to destination and total travelled
+end

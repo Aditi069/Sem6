@@ -1,0 +1,30 @@
+8 PUZZLE USING BEST FIRST SEARCH ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal states are hard coded
+Heuristic function: no of tiles in correct position
+h:heuristic value of given node
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+All possible board moves have been declared
+
+step 1:
+set root node to initial state
+
+step 2:
+repeat while(node(h)!=8)
+		update open and close list
+		apply all possible board moves to find all child nodes of current_node
+		calculate heuristic value of all child nodes
+		for(i=0;i<all_nodes;i++)
+			if(node(h)==8)
+				print(goal state achieved)
+				goto step 3
+			if(node(h)>current(h))
+				current=node
+end of loop
+
+step 3:
+print traversal from root to goal
+end

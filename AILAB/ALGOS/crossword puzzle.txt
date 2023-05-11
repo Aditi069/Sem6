@@ -1,0 +1,23 @@
+Crossword Puzzle
+
+function solve(board, across_words, down_words) {
+    for each row in board {
+        len = length of longest whitespace in that row
+
+        for word in across_words {
+            if len(word) == len{
+                board.replace(longest whitespace, word)
+            }
+        }
+    }
+
+    for each column in board {
+        len = length of longest whitespace in that column
+
+        for word in down_words {
+            if len(word) == len{
+                board.replace(longest whitespace, word)
+            }
+        }
+    }
+}

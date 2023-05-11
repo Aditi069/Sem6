@@ -1,0 +1,116 @@
+N-QUEENS PROBLEM:
+
+Consider the following presets:
+
+arr[][]:board
+q=queen number
+n=number of queens to be placed
+
+step 1:
+accept value of n from user
+create a 2d matrix with n rows and columns
+set entire matrix to '0'
+
+step 2:
+i=0,j=q-1
+if(arr[i][j]==0)
+	arr[i][j]=q
+	set all board tiles in the row,column and diagonal of the queen (q) to -q
+	q++
+else
+	i++
+if(i==n && j==q-1)
+	set all board tiles in the row,column and diagonal of the queen (q-1) to 0
+	remove queen (q-1) and set tile to -1
+	q--
+
+step 3:
+repeat step 2 while(q!=n+1)
+
+step 4:
+display board
+
+step 5:
+end
+
+
+//
+
+#include <stdio.h>
+
+#define MAX_SIZE 10
+
+int board[MAX_SIZE][MAX_SIZE];
+int n;
+
+void initialize_board() {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            board[i][j] = 0;
+        }
+    }
+}
+
+void place_queen(int q) {
+    int i = 0;
+    int j = q - 1;
+
+    while (q != n + 1) {
+        if (board[i][j] == 0) {
+            board[i][j] = q;
+
+            // Set all board tiles in the row, column, and diagonals of the queen (q) to -q
+            for (int k = 0; k < n; k++) {
+                board[i][k] = -q;
+                board[k][j] = -q;
+                if (i + k < n && j + k < n)
+                    board[i + k][j + k] = -q;
+                if (i - k >= 0 && j - k >= 0)
+                    board[i - k][j - k] = -q;
+                if (i + k < n && j - k >= 0)
+                    board[i + k][j - k] = -q;
+                if (i - k >= 0 && j + k < n)
+                    board[i - k][j + k] = -q;
+            }
+
+            q++;
+        }
+
+        i++;
+        if (i == n && j == q - 1) {
+            // Set all board tiles in the row, column, and diagonals of the previous queen (q-1) to 0
+            for (int k = 0; k < n; k++) {
+                for (int l = 0; l < n; l++) {
+                    if (board[k][l] == -(q - 1))
+                        board[k][l] = 0;
+                }
+            }
+            q--;
+            j = q - 1;
+        }
+
+        if (i == n)
+            i = 0;
+    }
+}
+
+void display_board() {
+    printf("Board:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    printf("Enter the number of queens: ");
+    scanf("%d", &n);
+
+    initialize_board();
+    place_queen(1);
+    display_board();
+
+    return 0;
+}

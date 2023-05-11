@@ -1,18 +1,31 @@
+# Python code for solving the 8-Puzzle Problem using A* algorithm
+
+# Importing necessary libraries
 from copy import deepcopy
 from colorama import init
 
+# Initializing colorama for colored output
 init(autoreset=True)
 
-
 class Puzzle:
+    # Initializing the board and goal state
     board = [[1, 2, 3], [0, 4, 6], [7, 5, 8]]
     goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
     startX = 0
     startY = 0
-    queue = []
-    generatedBoards = []
+    queue = [] # Priority queue for storing the boards
+    generatedBoards = [] # List for storing the generated boards
 
     def calcHeuristic(self, board):
+        """
+        This function calculates the heuristic value of the given board.
+
+        Args:
+        board (list): A 3x3 list representing the current state of the board.
+
+        Returns:
+        h (int): The heuristic value of the board.
+        """
         h = 0
         for i in range(3):
             for j in range(3):
@@ -21,6 +34,15 @@ class Puzzle:
         return h - 1
 
     def getValidMoves(self, board):
+        """
+        This function returns a list of valid moves that can be made from the current state of the board.
+
+        Args:
+        board (list): A 3x3 list representing the current state of the board.
+
+        Returns:
+        validMoves (list): A list of valid moves that can be made from the current state of the board.
+        """
         for i in range(3):
             for j in range(3):
                 if board[i][j] == 0:
@@ -43,6 +65,16 @@ class Puzzle:
         return validMoves
 
     def playMove(self, move: list, board: list):
+        """
+        This function returns a new board after making a move.
+
+        Args:
+        move (list): A list representing the move to be made.
+        board (list): A 3x3 list representing the current state of the board.
+
+        Returns:
+        newBoard (list): A 3x3 list representing the new state of the board after making the move.
+        """
         newBoard = deepcopy(board)
         temp = newBoard[move[1]][move[0]]
         newBoard[move[1]][move[0]] = newBoard[self.startY][self.startX]
@@ -50,6 +82,9 @@ class Puzzle:
         return newBoard
 
     def astar(self):
+        """
+        This function implements the A* algorithm to solve the 8-Puzzle problem.
+        """
         self.calcHeuristic(self.board)
         self.queue.append((self.calcHeuristic(self.board), self.board))
         self.generatedBoards.append(self.board)

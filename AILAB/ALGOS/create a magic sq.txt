@@ -1,0 +1,42 @@
+CREATE A MAGIC SQUARE:
+
+Condiser the following presets:
+
+arr[i][j]=board
+n: user value for size of matrix
+algorithm for only 'odd values of n'
+val: value to be added next
+
+step 1:
+accept value of n from user
+create a 2d matrix with n rows and columns
+set entire matrix to '0'
+
+step 2:
+first value val=1 is set on arr[i][j] where:
+i=0
+j=(n-1)/2
+
+step 3:
+while(val<=(n*n))
+	temp1=i
+	temp2=j
+	i--
+	if(i==-1)
+		i=n-1
+	j++
+	if(j==n)
+		j=0
+	if(arr[i][j]==0)
+		arr[i][j]=val
+	else
+		i=temp1+1
+		j=temp2
+		arr[i][j]=val
+	val++
+step 4:
+repeat step 3 while(board!=full)
+
+step 5:
+print final board
+end

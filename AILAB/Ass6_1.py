@@ -1,4 +1,16 @@
+# This code is a Python implementation of the Tic Tac Toe game using the MinMax algorithm.
+
+# This function prints the current state of the board.
 def ConstBoard(board):
+    """
+    This function prints the current state of the board.
+
+    Args:
+    board (list): A list representing the current state of the board.
+
+    Returns:
+    None
+    """
     print("Current State Of Board : \n\n")
     for i in range(0, 9):
         if ((i > 0) and (i % 3) == 0):
@@ -12,9 +24,16 @@ def ConstBoard(board):
     print("\n\n")
 
 # This function takes the user move as input and make the required changes on the board.
-
-
 def User1Turn(board):
+    """
+    This function takes the user move as input and makes the required changes on the board.
+
+    Args:
+    board (list): A list representing the current state of the board.
+
+    Returns:
+    None
+    """
     pos = input("Enter X's position from [1...9]: ")
     pos = int(pos)
     if (board[pos-1] != 0):
@@ -22,9 +41,18 @@ def User1Turn(board):
         exit(0)
     board[pos-1] = -1
 
-
 # MinMax function.
 def minimax(board, player):
+    """
+    This function implements the MinMax algorithm to determine the best move for the computer.
+
+    Args:
+    board (list): A list representing the current state of the board.
+    player (int): The player whose turn it is. 1 for computer, -1 for user.
+
+    Returns:
+    value (int): The score of the best move for the computer.
+    """
     x = analyzeboard(board)
     if (x != 0):
         return (x*player)
@@ -44,9 +72,16 @@ def minimax(board, player):
     return value
 
 # This function makes the computer's move using minmax algorithm.
-
-
 def CompTurn(board):
+    """
+    This function makes the computer's move using the MinMax algorithm.
+
+    Args:
+    board (list): A list representing the current state of the board.
+
+    Returns:
+    None
+    """
     pos = -1
     value = -2
     for i in range(0, 9):
@@ -61,9 +96,16 @@ def CompTurn(board):
     board[pos] = 1
 
 # This function is used to analyze a game.
-
-
 def analyzeboard(board):
+    """
+    This function analyzes the current state of the board to determine if there is a winner.
+
+    Args:
+    board (list): A list representing the current state of the board.
+
+    Returns:
+    int: 1 if computer wins, -1 if user wins, 0 if no winner yet.
+    """
     cb = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
           [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
@@ -75,9 +117,16 @@ def analyzeboard(board):
     return 0
 
 # Main Function.
-
-
 def main():
+    """
+    This function is the main function that runs the Tic Tac Toe game.
+
+    Args:
+    None
+
+    Returns:
+    None
+    """
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     print("Computer : O Vs. You : X")
     player = input("Enter to play 1(st) or 2(nd) :")
@@ -102,5 +151,5 @@ def main():
         ConstBoard(board)
         print("X Loose!!! O Wins !!!!")
 
-
+# Call the main function to run the game.
 main()

@@ -1,0 +1,105 @@
+8 PUZZLE USING A* ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal states are hard coded
+evaluation function f(n)=g(n)+h(n)
+g(n):distance travelled from root
+h(n):heuristic function value 
+Heuristic function: no of misplaced tiles 
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+set root node to initial state
+
+step 2:
+repeat while(node(h)!=0)
+		update open and close list
+		apply all possible board moves to find all child nodes of current_node
+		calculate evaluation function value of all child nodes
+		for(i=0;i<all_nodes;i++)
+			if(node(h)==0)
+				print(goal state achieved)
+				goto step 3
+			if(node(f)<current(f))
+				current=node
+end of loop
+
+step 3:
+print traversal from root to goal
+end
+
+
+
+//
+
+#include <stdio.h>
+#include <stdbool.h>
+
+// Function to calculate the heuristic value (number of misplaced tiles)
+int calculateHeuristic(int state[], int goal[]) {
+    int count = 0;
+    for (int i = 0; i < 9; i++) {
+        if (state[i] != goal[i])
+            count++;
+    }
+    return count;
+}
+
+// Function to check if the current state is the goal state
+bool isGoalState(int state[], int goal[]) {
+    for (int i = 0; i < 9; i++) {
+        if (state[i] != goal[i])
+            return false;
+    }
+    return true;
+}
+
+// Function to apply a move to find child nodes of current_node
+void applyMove(int current_node[], int move) {
+    // Implement the logic to apply a move to the current_node
+    // You need to define the moves and their corresponding effects on the puzzle
+}
+
+int main() {
+    int initial_state[] = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+    int goal_state[] = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+    int open[100]; // list of nodes whose children are not found
+    int closed[100]; // list of nodes whose children are found
+    int current_node[9]; // current node
+    int g_value = 0; // distance traveled from the root
+
+    // Step 1: Set root node to initial state
+    for (int i = 0; i < 9; i++) {
+        current_node[i] = initial_state[i];
+    }
+
+    // Step 2: Repeat until the heuristic value of the current node is 0
+    while (calculateHeuristic(current_node, goal_state) != 0) {
+        // Update open and closed lists
+        // Apply all possible board moves to find all child nodes of the current_node
+        // Calculate the evaluation function value of all child nodes
+
+        // Loop through all child nodes
+        for (int i = 0; i < all_nodes; i++) {
+            if (calculateHeuristic(current_node, goal_state) == 0) {
+                // Goal state achieved
+                printf("Goal state achieved\n");
+                goto step3;
+            }
+            if (node_f < current_f) {
+                // Update the current_node
+                // Assuming node_f and current_f are already defined and calculated
+                current_node = node;
+            }
+        }
+    }
+
+    // Step 3: Print traversal from root to goal
+    step3:
+    printf("Traversal from root to goal\n");
+
+    return 0;
+}
+

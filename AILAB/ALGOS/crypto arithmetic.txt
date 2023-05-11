@@ -1,0 +1,28 @@
+Crypt Arithmetic Problem
+
+mapping = new HashMap
+counter = 0
+
+function solve(alphabets, mapping) {
+    if all alphabets are assigned {
+        return mapping
+    }
+
+    for each alphabet in set of alphabets {
+        if alphabet mapped in mapping {
+            counter = counter + 1
+            continue
+        }
+
+        mapping[alphabet] = counter
+
+        if solve(alphabets, mapping) is not null {
+            return mapping
+        }
+        else {
+            mapping.remove(alphabet)
+        }
+    }
+
+    return null
+}

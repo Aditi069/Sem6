@@ -1,15 +1,30 @@
+# Import necessary libraries
 import copy
 from colorama import Fore, init
 
+# Initialize colorama
 init(autoreset=True)
 
-
+# Define the Puzzle class
 class Puzzle:
+    # Define the goal state of the puzzle
     goal = [[1, 2, 3], [8, 0, 4], [7, 6, 5]]
+    # Define the initial state of the puzzle
     board_config = [[2, 3, 4], [1, 8, 0], [7, 6, 5]]
+    # Initialize the number of steps taken to solve the puzzle
     steps = 0
 
+    # Calculate the heuristic value of a given configuration
     def calculate_fOfn(self, cal_config):
+        """
+        This function calculates the heuristic value of a given configuration.
+
+        Args:
+        cal_config (list): A 3x3 list representing the configuration of the puzzle.
+
+        Returns:
+        h (int): The heuristic value of the given configuration.
+        """
         h = 0
         for i in range(0, 3):
             for j in range(0, 3):
@@ -17,16 +32,44 @@ class Puzzle:
                     h += 1
         return h
 
+    # Check if a given move is safe
     def isSafe(self, x, y):
+        """
+        This function checks if a given move is safe.
+
+        Args:
+        x (int): The x-coordinate of the move.
+        y (int): The y-coordinate of the move.
+
+        Returns:
+        bool: True if the move is safe, False otherwise.
+        """
         return x >= 0 and x < 3 and y >= 0 and y < 3
 
+    # Print the current configuration of the puzzle
     def print_board(self, print_config):
+        """
+        This function prints the current configuration of the puzzle.
+
+        Args:
+        print_config (list): A 3x3 list representing the configuration of the puzzle.
+        """
         for i in range(0, 3):
             for j in range(0, 3):
                 print(" " + str(print_config[i][j]) + " ", end="")
         print()
 
+    # Find all possible configurations of the puzzle from the current configuration
     def find_all_configs(self, all_config):
+        """
+        This function finds all possible configurations of the puzzle from the current configuration.
+
+        Args:
+        all_config (list): A 3x3 list representing the configuration of the puzzle.
+
+        Returns:
+        config_boards (list): A list of all possible configurations of the puzzle from the current configuration.
+        """
         config_boards = []
         config2 = copy.deepcopy(all_config)
         config1 = copy.deepcopy(all_config)
@@ -57,7 +100,15 @@ class Puzzle:
                             config_boards.append(config4)
         return config_boards
 
+    # Start the puzzle
     def puzzle_start(self, config, goal_heuristic):
+        """
+        This function starts the puzzle.
+
+        Args:
+        config (list): A 3x3 list representing the initial configuration of the puzzle.
+        goal_heuristic (int): The heuristic value of the goal state of the puzzle.
+        """
         objective_values = []
         new_config = copy.deepcopy(config)
         boards_configs = []
@@ -104,11 +155,16 @@ class Puzzle:
             print("\n")
             objective_values.clear()
 
+    # Start the puzzle solving process
     def Start_Puzzle(self):
+        """
+        This function starts the puzzle solving process.
+        """
         print("8-Puzzle Problem Using Best First Search\n")
         goal_heuristic = self.calculate_fOfn(self.goal)
         self.puzzle_start(self.board_config, goal_heuristic)
 
 
+# Create an instance of the Puzzle class and start the puzzle solving process
 s = Puzzle()
 s.Start_Puzzle()

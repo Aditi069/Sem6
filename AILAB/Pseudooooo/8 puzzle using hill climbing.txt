@@ -1,0 +1,119 @@
+8 PUZZLE PROBLEM USING HILL CLIMBING ALGORITHM:
+ 
+Consider the following presets:
+
+Initial and goal state are hard coded
+objective function: no of tiles in corret position
+obj: objective function value of given node
+c=changed node
+
+All possible board moves have been declared
+
+step 1:
+set root node as initial state
+
+step 2:
+repeat while(node(obj)!=8 || local maxima)
+
+appy all possible board moves to find all child nodes
+
+calculate obj value of all child nodes
+
+for(i=0;i<child_nodes;i++)
+	c=0
+if(child(obj)==8)
+	print(goal state achieved)
+if(child(obj)>print(obj))
+	parent=child
+	c=1
+if(c==0)
+	print(local maxima)
+	goto step 3
+end of loop
+
+step 3: end
+
+
+//
+
+#include <stdio.h>
+#include <stdbool.h>
+
+// Function to calculate the objective value (number of tiles in correct position)
+int calculateObjective(int state[], int goal[]) {
+    int count = 0;
+    for (int i = 0; i < 9; i++) {
+        if (state[i] == goal[i])
+            count++;
+    }
+    return count;
+}
+
+// Function to check if the current state is the goal state
+bool isGoalState(int state[], int goal[]) {
+    for (int i = 0; i < 9; i++) {
+        if (state[i] != goal[i])
+            return false;
+    }
+    return true;
+}
+
+// Function to apply a move and generate child nodes
+void applyMove(int current_node[], int move) {
+    // Implement the logic to apply a move to the current_node and generate child nodes
+    // You need to define the moves and their corresponding effects on the puzzle
+}
+
+int main() {
+    int initial_state[] = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+    int goal_state[] = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+    int current_node[9]; // current node
+    int child_node[9]; // child node
+    int objective_value; // objective function value
+
+    // Step 1: Set root node to initial state
+    for (int i = 0; i < 9; i++) {
+        current_node[i] = initial_state[i];
+    }
+
+    // Step 2: Repeat until the objective value of the current node is 8 or local maxima
+    while (calculateObjective(current_node, goal_state) != 8 || local_maxima) {
+        // Apply all possible board moves to find all child nodes
+        for (int i = 0; i < child_nodes; i++) {
+            // Initialize the child node with the current node
+            for (int j = 0; j < 9; j++) {
+                child_node[j] = current_node[j];
+            }
+
+            // Apply the move to generate a child node
+            applyMove(child_node, i);
+
+            // Calculate the objective value of the child node
+            int child_objective = calculateObjective(child_node, goal_state);
+
+            int c = 0;
+            if (child_objective == 8) {
+                // Goal state achieved
+                printf("Goal state achieved\n");
+            }
+            if (child_objective > objective_value) {
+                // Update the parent node to the child node
+                // Assuming objective_value is already defined and calculated
+                for (int j = 0; j < 9; j++) {
+                    current_node[j] = child_node[j];
+                }
+                objective_value = child_objective;
+                c = 1;
+            }
+            if (c == 0) {
+                // Local maxima reached
+                printf("Local maxima reached\n");
+                goto step3;
+            }
+        }
+    }
+
+    // Step 3: End
+    step3:
+    return 0;
+}

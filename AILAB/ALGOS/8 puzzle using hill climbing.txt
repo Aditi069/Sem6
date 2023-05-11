@@ -1,0 +1,34 @@
+8 PUZZLE PROBLEM USING HILL CLIMBING ALGORITHM:
+ 
+Consider the following presets:
+
+Initial and goal state are hard coded
+objective function: no of tiles in corret position
+obj: objective function value of given node
+c=changed node
+
+All possible board moves have been declared
+
+step 1:
+set root node as initial state
+
+step 2:
+repeat while(node(obj)!=8 || local maxima)
+
+appy all pssible board moves to find all child nodes
+
+calculate obj value of all child nodes
+
+for(i=0;i<child_nodes;i++)
+	c=0
+if(child(obj)==8)
+	print(goal state achieved)
+if(child(obj)>print(obj))
+	parent=child
+	c=1
+if(c==0)
+	print(local maxima)
+	goto step 3
+end of loop
+
+step 3: end

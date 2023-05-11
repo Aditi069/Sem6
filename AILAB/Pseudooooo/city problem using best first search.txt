@@ -1,0 +1,129 @@
+CITY DISTANCE PROBLEM USING BEST FIRST SEARCH ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal city are hard coded
+edge value indicates straight line distance
+Heuristic function: shortest distance
+h:heuristic value of given node
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+created a weighted graph with each city as a vertex and distance between 2 cities as weight of that egde
+
+
+step 2:
+set origin_city as root
+
+step 3:
+repeat while(node(h)!=0)
+		find all cities connected to current_node from the graph
+		calculate heuristic value of each node
+		for(i=0;i<all_node;i++)
+			if(node(h)==0)
+				print(destinated reached)
+				goto step 4
+			if(node(h)<current(h))
+				current=node
+			update open and close list
+end of loop
+
+step 4:
+print tree traversal route from origin to destination and total travelled
+end
+
+
+///
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+typedef struct {
+    int city_id;
+    int distance_from_origin;
+    int distance_to_destination;
+} City;
+
+int calculateHeuristic(City city, City destination_city) {
+    return calculateDistance(city, destination_city);
+}
+
+int calculateDistance(City city1, City city2) {
+    int dx = abs(city1.distance_from_origin - city2.distance_from_origin);
+    int dy = abs(city1.distance_to_destination - city2.distance_to_destination);
+    return sqrt(dx * dx + dy * dy);
+}
+
+int main() {
+    // Step 1: Create a weighted graph with each city as a vertex and distance between 2 cities as weight of that edge
+    City graph[10]; // Assuming 10 cities in the graph
+
+    // Initialize the graph with city distances
+    // graph[0] = origin_city;
+    // graph[1] = city1;
+    // graph[2] = city2;
+    // ...
+    // graph[9] = destination_city;
+
+    // Step 2: Set origin_city as root
+    City origin_city = graph[0];
+    City destination_city = graph[9];
+
+    City current_node = origin_city; // Current node
+    City child_node; // Child node
+
+    // Lists to track open and closed nodes
+    City open[10]; // List of nodes whose children are not found
+    City closed[10]; // List of nodes whose children are found
+
+    // Step 3: Repeat until the heuristic value of the current node is 0
+    while (calculateHeuristic(current_node, destination_city) != 0) {
+        // Find all cities connected to the current_node from the graph
+        // Calculate the heuristic value of each node
+
+        int num_children = 0;
+        for (int i = 0; i < 10; i++) {
+            if (i != current_node.city_id) {
+                child_node = graph[i];
+                child_node.distance_to_destination = calculateDistance(child_node, destination_city);
+                open[num_children] = child_node;
+                num_children++;
+            }
+        }
+
+        // Check if destination is reached
+        if (calculateHeuristic(current_node, destination_city) == 0) {
+            printf("Destination reached!\n");
+            break;
+        }
+
+        // Find the node with the lowest heuristic value in the open list
+        int lowest_heuristic = calculateHeuristic(open[0], destination_city);
+        int lowest_heuristic_index = 0;
+        for (int i = 1; i < num_children; i++) {
+            int heuristic = calculateHeuristic(open[i], destination_city);
+            if (heuristic < lowest_heuristic) {
+                lowest_heuristic = heuristic;
+                lowest_heuristic_index = i;
+            }
+        }
+
+        // Update the current_node
+        current_node = open[lowest_heuristic_index];
+
+        // Update the open and closed lists
+        // ...
+
+    }
+
+    // Step 4: Print the tree traversal route from origin to destination and the total traveled distance
+    printf("Traversed Cities:\n");
+    // Print the traversal route from origin to destination
+    // ...
+
+    printf("Total Distance Traveled: %d\n", current_node.distance_from_origin);
+
+    return 0;
+}

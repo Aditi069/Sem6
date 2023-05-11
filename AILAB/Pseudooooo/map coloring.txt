@@ -1,0 +1,138 @@
+MAP COLORING PROBLEM:
+
+Consider the following presets:
+
+col[]:array containing all colors to be used
+open[]:list of all nodes that are not yet colored
+closed[]:list of all nodes that are colored
+
+step 1:
+create a graph with each map element as a vertex and connect neighbouring elements using edges
+
+step 2:
+repeat while(open[]!=empty)
+		for(i=0;i<open;i++)
+			find all nodes connected to open[i]
+			eliminate all used colors
+			choose color for 'i' from remaining colors available
+	end of loop
+
+step 3:
+if(open==empty)
+	goto step 4
+else
+	print(could not color entire map)
+	goto step 5
+
+step 4:
+print colors, sequence of all map elements
+
+step 5:
+end
+
+///
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+#define MAX_NODES 10
+#define MAX_COLORS 4
+
+typedef struct {
+    char node;
+    int color;
+} MapElement;
+
+char colors[MAX_COLORS] = {'R', 'G', 'B', 'Y'};
+MapElement graph[MAX_NODES];
+int num_nodes = 0;
+int num_open = 0;
+int num_closed = 0;
+
+void add_node(char node) {
+    graph[num_nodes].node = node;
+    graph[num_nodes].color = -1;
+    num_nodes++;
+    num_open++;
+}
+
+bool is_valid_color(char node, int color) {
+    for (int i = 0; i < num_nodes; i++) {
+        if (graph[i].node == node) {
+            for (int j = 0; j < num_nodes; j++) {
+                if (i != j && graph[j].color != -1 && graph[i].color == graph[j].color && graph[i].node != graph[j].node) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+void color_map() {
+    while (num_open > 0) {
+        for (int i = 0; i < num_open; i++) {
+            char current_node = graph[i].node;
+            
+            // Find all nodes connected to current_node
+            
+            // Eliminate used colors
+            for (int j = 0; j < num_nodes; j++) {
+                if (i != j) {
+                    char connected_node = graph[j].node;
+                    for (int k = 0; k < num_nodes; k++) {
+                        if (k != j && graph[k].node == connected_node && graph[k].color != -1) {
+                            int used_color = graph[k].color;
+                            for (int l = 0; l < MAX_COLORS; l++) {
+                                if (colors[l] == used_color) {
+                                    colors[l] = ' ';
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Choose color for current_node from remaining colors available
+            for (int j = 0; j < MAX_COLORS; j++) {
+                if (colors[j] != ' ') {
+                    if (is_valid_color(current_node, colors[j])) {
+                        graph[i].color = colors[j];
+                        num_open--;
+                        num_closed++;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void print_map() {
+    printf("Colors, Sequence of Map Elements:\n");
+    for (int i = 0; i < num_nodes; i++) {
+        printf("%c -> %c\n", graph[i].node, graph[i].color);
+    }
+}
+
+int main() {
+    add_node('A'); // Add nodes to the graph
+    add_node('B');
+    add_node('C');
+    add_node('D');
+    add_node('E');
+
+    color_map();
+
+    if (num_open == 0) {
+        print_map();
+    } else {
+        printf("Could not color the entire map.\n");
+    }
+
+    return 0;
+}
+	

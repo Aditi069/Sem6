@@ -1,0 +1,34 @@
+CITY DISTANCE PROBLEM USING BEST FIRST SEARCH ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal city are hard coded
+edge value indicates straight line distance
+Heuristic function: shortest distance
+h:heuristic value of given node
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+created a weighted graph with each city as a vertex and distance between 2 cities as weight of that egde
+
+
+step 2:
+set origin_city as root
+
+step 3:
+repeat while(node(h)!=0)
+		find all cities connected to current_node from the graph
+		calculate heuristic value of each node
+		for(i=0;i<all_node;i++)
+			if(node(h)==0)
+				print(destinated reached)
+				goto step 4
+			if(node(h)<current(h))
+				current=node
+			update open and close list
+end of loop
+
+step 4:
+print tree traversal route from origin to destination and total travelled
+end

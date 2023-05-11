@@ -1,0 +1,30 @@
+ROBOT NAVIGATION PROBLEM USING A* ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal position are hard coded
+evaluation function f(n)=g(n)+h(n)
+g(n):distance travelled from initial tile
+h(n):manhattan distance to goal tile
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+set initial position to root node
+
+step 2:
+repeat while(node(h)!=0)
+		update open and close list
+		find all tiles that can be reached from current_node
+		calculate evaluation value of all child nodes
+		for(i=0;i<all_nodes;i++)
+			if(node(h)==0)
+				print(goal position achieved)
+				goto step 3
+			if(node(h)<current(h))
+				current=node
+end of loop
+
+step 3:
+print robot navigation path
+end

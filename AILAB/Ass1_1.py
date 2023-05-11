@@ -1,12 +1,35 @@
+# This is a Python code that allows two players to play a game of tic-tac-toe.
+
 def play_tic_tac_toe():
+    """
+    This function allows two players to play a game of tic-tac-toe.
+
+    Args:
+    None.
+
+    Returns:
+    None.
+    """
     board = ['-'] * 9  # create a list to represent the game board
 
     def display_board():
+        """
+        This function displays the current state of the game board.
+        """
         print(board[0] + '|' + board[1] + '|' + board[2])
         print(board[3] + '|' + board[4] + '|' + board[5])
         print(board[6] + '|' + board[7] + '|' + board[8])
 
     def check_win(mark):
+        """
+        This function checks if a player has won the game.
+
+        Args:
+        mark (str): The mark ('X' or 'O') of the player to check for a win.
+
+        Returns:
+        bool: True if the player has won, False otherwise.
+        """
         # check for horizontal wins
         for i in range(0, 9, 3):
             if board[i] == board[i+1] == board[i+2] == mark:
@@ -23,6 +46,15 @@ def play_tic_tac_toe():
         return False
 
     def check_tie():
+        """
+        This function checks if the game has ended in a tie.
+
+        Args:
+        None.
+
+        Returns:
+        bool: True if the game has ended in a tie, False otherwise.
+        """
         return '-' not in board
 
     display_board()

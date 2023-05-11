@@ -1,4 +1,19 @@
+# Python code for solving the N-Queens problem using backtracking algorithm
+
 def is_valid(board, row, col, n):
+    """
+    This function checks if it is valid to place a queen at the given row and column
+    on the board of size n.
+
+    Args:
+    board (list): A list of lists representing the chess board.
+    row (int): The row number to check.
+    col (int): The column number to check.
+    n (int): The size of the board.
+
+    Returns:
+    bool: True if it is valid to place a queen at the given row and column, False otherwise.
+    """
     # check if the same row already has a queen
     for i in range(col):
         if board[row][i] == 1:
@@ -18,6 +33,18 @@ def is_valid(board, row, col, n):
 
 
 def solve_n_queens(board, col, n):
+    """
+    This function recursively places queens on the board until all queens have been placed
+    or no valid placement is possible.
+
+    Args:
+    board (list): A list of lists representing the chess board.
+    col (int): The current column number.
+    n (int): The size of the board.
+
+    Returns:
+    bool: True if all queens have been placed, False otherwise.
+    """
     # base case: all queens have been placed
     if col == n:
         return True
@@ -41,6 +68,13 @@ def solve_n_queens(board, col, n):
 
 
 def n_queens(n):
+    """
+    This function initializes the board and calls the solve_n_queens function to solve
+    the N-Queens problem for the given board size.
+
+    Args:
+    n (int): The size of the board.
+    """
     board = [[0 for x in range(n)] for y in range(n)]
     if not solve_n_queens(board, 0, n):
         print("No solution exists for n = {}".format(n))
@@ -50,6 +84,10 @@ def n_queens(n):
 
 
 def main():
+    """
+    This function takes user input for the board size and calls the n_queens function
+    to solve the N-Queens problem for the given board size.
+    """
     n = int(input("Enter the value of n: "))
     n_queens(n)
 

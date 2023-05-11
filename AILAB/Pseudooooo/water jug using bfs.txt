@@ -1,0 +1,41 @@
+WATER JUG PROBLEM USING Breadth First Search:
+
+Consider the following presets:
+
+j1:max capacity of jug 1
+j2:max capacity of jug 2
+s1:value of jug 1 in goal state
+s2:value of jug 2 in goal state
+open[]:nodes whose children are not calculated
+closed[]:whose children are calculated
+x:current value of jug 1
+y:current value of jug 2
+
+initially both jugs are empty and all possible rules have been declared
+
+step 1:
+accept value of j1,j2,s1,s2 from user
+set root node with x=0,y=0
+
+step 2:
+apply all possible rules on root node to find all possible child nodes
+if(child_node==goal)
+	goto step 5
+update open and close list
+
+step 3:
+find leftmost leafnode of root
+apply all possible rules to find all possible child nodes
+if(child_node==goal)
+	goto step 5
+else
+	update open and close list
+	backtrack to parent node
+	find next leftmost node
+
+step 4:
+repeat step 3 while goal state is not reached
+
+step 5:
+print the traversed route from root node to goal node
+end

@@ -1,0 +1,31 @@
+8 PUZZLE USING A* ALGORITHM:
+
+Consider the following presets:
+
+Initial and goal states are hard coded
+evaluation function f(n)=g(n)+h(n)
+g(n):distance travelled from root
+h(n):heuristic function value 
+Heuristic function: no of misplaced tiles 
+open[]:list of nodes whose children are not found
+closed[]:list of nodes whose children are found
+
+step 1:
+set root node to initial state
+
+step 2:
+repeat while(node(h)!=0)
+		update open and close list
+		apply all possible board moves to find all child nodes of current_node
+		calculate evaluation function value of all child nodes
+		for(i=0;i<all_nodes;i++)
+			if(node(h)==0)
+				print(goal state achieved)
+				goto step 3
+			if(node(f)<current(f))
+				current=node
+end of loop
+
+step 3:
+print traversal from root to goal
+end

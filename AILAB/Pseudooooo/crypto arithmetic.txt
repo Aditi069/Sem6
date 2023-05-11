@@ -1,0 +1,115 @@
+Crypt Arithmetic Problem
+
+mapping = new HashMap
+counter = 0
+
+function solve(alphabets, mapping) {
+    if all alphabets are assigned {
+        return mapping
+    }
+
+    for each alphabet in set of alphabets {
+        if alphabet mapped in mapping {
+            counter = counter + 1
+            continue
+        }
+
+        mapping[alphabet] = counter
+
+        if solve(alphabets, mapping) is not null {
+            return mapping
+        }
+        else {
+            mapping.remove(alphabet)
+        }
+    }
+
+    return null
+}
+
+///
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_ALPHABETS 10
+
+typedef struct {
+    char alphabet;
+    int value;
+} Mapping;
+
+Mapping mapping[MAX_ALPHABETS];
+int counter = 0;
+
+bool is_valid_assignment(char alphabets[], Mapping mapping[], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (mapping[i].alphabet == mapping[j].alphabet && mapping[i].value == mapping[j].value) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool solve(char alphabets[], Mapping mapping[], int n) {
+    if (counter == n) {
+        return true;
+    }
+
+    char current_alphabet = alphabets[counter];
+
+    if (mapping[counter].value != -1) {
+        counter++;
+        return solve(alphabets, mapping, n);
+    }
+
+    for (int i = 0; i <= 9; i++) {
+        bool is_assigned = false;
+
+        for (int j = 0; j < n; j++) {
+            if (mapping[j].value == i) {
+                is_assigned = true;
+                break;
+            }
+        }
+
+        if (is_assigned) {
+            continue;
+        }
+
+        mapping[counter].value = i;
+
+        if (is_valid_assignment(alphabets, mapping, n) && solve(alphabets, mapping, n)) {
+            return true;
+        } else {
+            mapping[counter].value = -1;
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    char alphabets[] = "SENDMORY";
+    int n = strlen(alphabets);
+
+    for (int i = 0; i < n; i++) {
+        mapping[i].alphabet = alphabets[i];
+        mapping[i].value = -1;
+    }
+
+    if (solve(alphabets, mapping, n)) {
+        printf("Mapping:\n");
+        for (int i = 0; i < n; i++) {
+            printf("%c -> %d\n", mapping[i].alphabet, mapping[i].value);
+        }
+    } else {
+        printf("No valid mapping found.\n");
+    }
+
+    return 0;
+}
